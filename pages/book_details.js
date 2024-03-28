@@ -10,6 +10,7 @@ function get_book(id) {
 }
 
 function get_book_dtl(id) {
+  id = escapeHTML(id);
   return BookInstance
           .find({ 'book': id })
           .select('imprint status');
@@ -29,4 +30,9 @@ exports.show_book_dtls = async (res, id) => {
   catch(err) {
     res.send(`Book ${id} not found`);
   } 
+}
+
+// Function to HTML escape user input
+function escapeHTML(input) {
+  return input.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
